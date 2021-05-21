@@ -2,7 +2,7 @@
 
 import PopUp from "./popup.js";
 import Field from "./field.js";
-import Game from "./game.js";
+import { GameBuilder, Reason } from "./game.js";
 
 const CARROT_SIZE = 80;
 const CARROT_COUNT = 20;
@@ -11,17 +11,21 @@ const GAME_DURATION_SEC = 20;
 
 const gameFinishBanner = new PopUp();
 
-const game = new Game(20, 20, 20);
+const game = new GameBuilder()
+  .withBugCOunt(20)
+  .withCarrotCount(20)
+  .withGameDuration(20)
+  .build();
 game.setGameStopListener((reason) => {
   let message;
   switch (reason) {
-    case "cancel":
+    case Reason.cancel:
       message = "Replay";
       break;
-    case "lose":
+    case Reason.lose:
       message = "Lost";
       break;
-    case "win":
+    case Reason.win:
       message = "Won";
       break;
     default:
